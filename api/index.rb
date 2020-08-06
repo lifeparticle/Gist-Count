@@ -3,7 +3,7 @@ require 'net/http'
 require 'json'
 
 Handler = Proc.new do |req, res|
-	svg = Victor::SVG.new width: 150, height: 50, style: { background: '#ddd' }
+	svg = Victor::SVG.new width: 250, height: 30, style: { background: '#ddd' }
 	if req.query.has_key?("username")
 		username = req.query["username"]
 		gist_count = 0;
