@@ -18,6 +18,6 @@ Handler = Proc.new do |req, res|
 
 	#svg.save 'pacman'
 	res.status = 200
-	res['Content-Type'] = 'image/svg+xml; charset=utf-8'
+	res['Content-Type'] = 'image/svg+xml'
 	res.body = svg
 end
