@@ -3,7 +3,7 @@ require 'net/http'
 require 'json'
 
 Handler = Proc.new do |req, res|
-	svg = Victor::SVG.new width: 200, height: 200, style: { background: '#ddd' }
+	svg = Victor::SVG.new width: 150, height: 50, style: { background: '#ddd' }
 	if req.query.has_key?("username")
 		username = req.query["username"]
 		gist_count = 0;
@@ -16,14 +16,11 @@ Handler = Proc.new do |req, res|
 				params = "/users/#{username}/gists?page=#{page}"
 				url = URI.parse(URI.escape(("#{BASE_URL}#{params}")))
 				result = Net::HTTP.get_response(url)
-				puts "#{url}"
 				if result.is_a?(Net::HTTPSuccess)
 					parsed = JSON.parse(result.body)
 					break if parsed.count == 0
 					gist_count += parsed.count
 					page = page + 1
-					puts "#{page}"
-					puts "#{parsed.count}"
 				else
 					gist_count = "#{result}"
 					break
@@ -34,12 +31,10 @@ Handler = Proc.new do |req, res|
 		end
 
 		svg.build do
-			g font_size: 20, font_family: 'arial', fill: 'black' do
-				text gist_count, x: 20, y: 20
+			g font_size: 16, font_family: 'arial', fill: 'black' do
+				text "#{username}'s gist count is: #{gist_count}", x: 20, y: 20
 			end
 		end
-
-		puts "#{parsed.count}"
 
 		res.status = 200
 		res['Content-Type'] = 'image/svg+xml'
@@ -47,7 +42,7 @@ Handler = Proc.new do |req, res|
 	else
 
 		svg.build do
-			g font_size: 20, font_family: 'arial', fill: 'black' do
+			g font_size: 16, font_family: 'arial', fill: 'black' do
 				text "username name not found", x: 20, y: 20
 			end
 		end
