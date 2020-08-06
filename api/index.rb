@@ -3,31 +3,34 @@ require 'net/http'
 require 'json'
 
 Handler = Proc.new do |req, res|
-	puts "#{req.query}"
 	svg = Victor::SVG.new width: 200, height: 200, style: { background: '#ddd' }
 
 	if req.query["username"]
 		username = req.query["username"]
-		param = "/users/#{username}/gists"
+		page = 1;
+		param = "/users/#{username}/gists?per_page=100?page=#{page}"
 		BASE_URL = "https://api.github.com"
 		gist_count = 0;
+
 		begin
-			#gist_ids.each do |gist_id|
-			url = URI.parse(URI.escape(("#{BASE_URL}#{param}")))
-			result = Net::HTTP.get_response(url)
-			if result.is_a?(Net::HTTPSuccess)
-				parsed = JSON.parse(result.body)
-				gist_count += parsed.count
-				puts "#{parsed.count}"
+			while true
+				url = URI.parse(URI.escape(("#{BASE_URL}#{param}")))
+				result = Net::HTTP.get_response(url)
+				if result.is_a?(Net::HTTPSuccess)
+					parsed = JSON.parse(result.body)
+					break if parsed.count == 0
+					gist_count += parsed.count
+					page += 1
+					puts "#{parsed.count}"
+				end
 			end
-			#end
 		rescue Exception => e
 			puts "#{"something bad happened"} #{e}"
 		end
 
 		svg.build do
 			g font_size: 20, font_family: 'arial', fill: 'black' do
-				text gist_count, x: 40, y: 50
+				text gist_count, x: 10, y: 10
 			end
 		end
 
@@ -38,7 +41,7 @@ Handler = Proc.new do |req, res|
 
 		svg.build do
 			g font_size: 20, font_family: 'arial', fill: 'black' do
-				text "username name not found", x: 40, y: 50
+				text "username name not found", x: 10, y: 10
 			end
 		end
 
