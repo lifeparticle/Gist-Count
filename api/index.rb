@@ -3,7 +3,7 @@ require 'net/http'
 require 'json'
 
 Handler = Proc.new do |req, res|
-	puts "#{request.query}"
+	puts "#{req.query}"
 	username = "lifeparticle"
 	param = "/users/#{username}/gists"
 	BASE_URL = "https://api.github.com"
