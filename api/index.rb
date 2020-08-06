@@ -3,6 +3,7 @@ require 'net/http'
 require 'json'
 
 Handler = Proc.new do |req, res|
+	puts "#{req.inspect} #{res.inspect}"
 	svg = Victor::SVG.new width: 250, height: 30, style: { background: '#ddd' }
 	if req.query.has_key?("username")
 		username = req.query["username"]
