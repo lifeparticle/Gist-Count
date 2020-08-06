@@ -22,6 +22,9 @@ Handler = Proc.new do |req, res|
 		puts "#{"something bad happened"} #{e}"
 	end
 
+	svg = Victor::SVG.new
+	svg.setup width: 200, height: 150
+
 	svg.build do
 		g font_size: 30, font_family: 'arial', fill: 'white' do
 			text gist_count, x: 40, y: 50
