@@ -28,7 +28,6 @@ Handler = Proc.new do |req, res|
 					gist_count = "#{result}"
 					break
 				end
-				sleep 5
 			end
 		rescue Exception => e
 			puts "#{"something bad happened"} #{e}"
