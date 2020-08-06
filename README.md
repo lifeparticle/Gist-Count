@@ -2,7 +2,9 @@
 
 [![forthebadge](https://forthebadge.com/images/badges/made-with-ruby.svg)](https://forthebadge.com)
 
-<a href="https://github.com/lifeparticle/Gist-Count/issues"><img alt="contributions welcome" src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat"/></a>
+<a href="https://github.com/lifeparticle/Gist-Count/issues">
+<img alt="contributions welcome" src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat"/>
+</a>
 
 </div>
 
