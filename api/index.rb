@@ -37,6 +37,7 @@ Handler = Proc.new do |req, res|
 		end
 
 		res.status = 200
+		res['Cache-Control'] = "public, max-age=#{86400}"
 		res['Content-Type'] = 'image/svg+xml'
 		res.body = svg.render
 	else
