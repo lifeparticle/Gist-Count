@@ -58,5 +58,3 @@ Handler = Proc.new do |req, res|
 		res.body = svg.render
 	end
 end
-
-Handler.call
