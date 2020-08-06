@@ -4,7 +4,7 @@ require 'json'
 
 Handler = Proc.new do |req, res|
 	svg = Victor::SVG.new width: 200, height: 200, style: { background: '#ddd' }
-	if req.query.has_key?(:username)
+	if req.query.has_key?("username")
 		username = req.query["username"]
 		gist_count = 0;
 		page = 1;
