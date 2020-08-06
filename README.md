@@ -1,5 +1,7 @@
 # Gist-Count
 
+[![forthebadge](https://forthebadge.com/images/badges/made-with-ruby.svg)](https://forthebadge.com)
+
 # GitHub API
 [list-gists-for-a-user](https://docs.github.com/en/rest/reference/gists#list-gists-for-a-user)
 
