@@ -13,6 +13,15 @@
 ```
 [![Github gists](https://gist-count.vercel.app/api?username=REPLACE_WITH_YOUR_USERNAME)](https://gist.github.com/REPLACE_WITH_YOUR_USERNAME)
 ```
+
+## Example
+
+[![Github gists](https://gist-count.vercel.app/api?username=lifeparticle)](https://gist.github.com/lifeparticle)
+
+## Cache
+
+Default cache is 1 day (86400 seconds).
+
 Resources
 ============
 1. [list-gists-for-a-user](https://docs.github.com/en/rest/reference/gists#list-gists-for-a-user)
