@@ -18,6 +18,22 @@
 
 [![Github gists](https://gist-count.vercel.app/api?username=lifeparticle)](https://gist.github.com/lifeparticle)
 
+```
+[![Github gists](https://gist-count.vercel.app/api?username=lifeparticle)](https://gist.github.com/lifeparticle)
+```
+
+or using an image tag
+
+<a href="https://gist.github.com/lifeparticle">
+<img height="100px" width="500px" src="https://gist-count.vercel.app/api?username=lifeparticle">
+</a>
+
+```
+<a href="https://gist.github.com/lifeparticle">
+<img height="100px" width="500px" src="https://gist-count.vercel.app/api?username=lifeparticle">
+</a>
+```
+
 ## Cache
 
 Default cache is 1 day (86400 seconds).
