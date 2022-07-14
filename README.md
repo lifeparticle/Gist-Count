@@ -10,27 +10,38 @@
 
 # How to use
 
-```
+Copy and replace the placeholders
+
+this:
+```markdown
 [![Github gists](https://gist-count.vercel.app/api?username=REPLACE_WITH_YOUR_USERNAME)](https://gist.github.com/REPLACE_WITH_YOUR_USERNAME)
 ```
+or this (allows for more customization):
+```html
+<a href="https://gist.github.com/lifeparticle">
+<img style="height:100px;width:500px;border-radius:6px;" class="image" src="https://gist-count.vercel.app/api?username=lifeparticle">
+</a>
+```
 
-## Example
+# Examples
+
+In Markdown:
 
 [![Github gists](https://gist-count.vercel.app/api?username=lifeparticle)](https://gist.github.com/lifeparticle)
 
-```
+```markdown
 [![Github gists](https://gist-count.vercel.app/api?username=lifeparticle)](https://gist.github.com/lifeparticle)
 ```
 
-or using an image tag
+Or in HTML using an image tag:
 
 <a href="https://gist.github.com/lifeparticle">
-<img height="100px" width="500px" src="https://gist-count.vercel.app/api?username=lifeparticle">
+<img style="height:100px;width:500px;border-radius:6px;" class="image" src="https://gist-count.vercel.app/api?username=lifeparticle">
 </a>
 
-```
+```html
 <a href="https://gist.github.com/lifeparticle">
-<img height="100px" width="500px" src="https://gist-count.vercel.app/api?username=lifeparticle">
+<img style="height:100px;width:500px;border-radius:6px;" class="image" src="https://gist-count.vercel.app/api?username=lifeparticle">
 </a>
 ```
 
