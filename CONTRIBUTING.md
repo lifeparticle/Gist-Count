@@ -44,13 +44,13 @@
     remote:      https://github.com/........................
     ```
 
-   5.2 If you're haveing problem finding the url
+   5.2 If you're having problem finding the url
 
        a) https://github.com/lifeparticle/Gist-Count/pulls
 
        b) Click the button 'New pull request'
 
-       c) Click the link 'compare acorss forks'
+       c) Click the link 'compare across forks'
 
        d) Change head repository to your fork
 
