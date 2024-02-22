@@ -20,7 +20,7 @@ Handler = Proc.new do |req, res|
   svg.rect x: 0, y: 0, width: width, height: 30, rx: 5, fill: '#30363C'
   svg.build do
     g font_size: 12, font_family: 'arial', fill: 'white' do      
-      text message, x: 5, y: 20
+      text message, x: 5.5, y: 20
     end
   end
 
