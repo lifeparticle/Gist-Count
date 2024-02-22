@@ -17,7 +17,7 @@ Handler = Proc.new do |req, res|
   width = calculate_width(message)
 
   svg = Victor::SVG.new width: width, height: 30, style: { background: '#30363C' }
-  svg.rect x: 0, y: 0, width: width, height: 30, rx: 5, fill: '#30363C'
+  svg << "<rect x='0' y='0' width='#{width}' height='30' rx='5' ry='5' fill='#30363C' />"
   svg.build do
     g font_size: 12, font_family: 'arial', fill: 'white' do      
       text message, x: 6.5, y: 20
