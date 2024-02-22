@@ -20,7 +20,7 @@ Handler = Proc.new do |req, res|
   svg.rect x: 0, y: 0, width: width, height: 20, rx: 5, ry: 5, fill: '#30363C'
   svg.build do
     g font_size: 10, font_family: 'arial', fill: 'white' do      
-      text message, x: width / 2, y: 15, text_anchor: 'middle'
+      text message, x: width / 2, y: 17, text_anchor: 'middle'
     end
   end
 
@@ -55,5 +55,5 @@ rescue => e
 end
 
 def calculate_width(text)
-  text.length * 4
+  text.length * 3.5
 end
