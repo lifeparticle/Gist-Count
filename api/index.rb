@@ -19,8 +19,8 @@ Handler = Proc.new do |req, res|
   svg = Victor::SVG.new width: width, height: 30, style: { background: '#30363C' }
   svg.rect x: 0, y: 0, width: width, height: 30, rx: 5, fill: '#30363C'
   svg.build do
-    g font_size: 12, font_family: 'arial', fill: 'white' do
-      text message, x: 10, y: 20
+    g font_size: 12, font_family: 'arial', fill: 'white' do      
+      text message, x: 3, y: 20
     end
   end
 
@@ -55,5 +55,5 @@ rescue => e
 end
 
 def calculate_width(text)
-  text.length * 6
+  text.length * 5 + 6
 end
