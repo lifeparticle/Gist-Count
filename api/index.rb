@@ -14,10 +14,10 @@ Handler = Proc.new do |req, res|
     status = 404
   end
 
-  # Calculate width dynamically based on message length
   width = calculate_width(message)
 
   svg = Victor::SVG.new width: width, height: 30, style: { background: '#30363C' }
+  svg.rect x: 0, y: 0, width: width, height: 30, rx: 5, fill: '#30363C'
   svg.build do
     g font_size: 12, font_family: 'arial', fill: 'white' do
       text message, x: 10, y: 20
@@ -25,7 +25,7 @@ Handler = Proc.new do |req, res|
   end
 
   res.status = status
-  res['Cache-Control'] = "public, max-age=#{86_400}"
+  # res['Cache-Control'] = "public, max-age=#{86_400}"
   res['Content-Type'] = 'image/svg+xml'
   res.body = svg.render
 end
@@ -55,7 +55,5 @@ rescue => e
 end
 
 def calculate_width(text)
-  base_width = 250 # Minimum width
-  additional_width = text.length * 8 # Approx. width per character
-  [base_width, additional_width].max
+  text.length * 8
 end
