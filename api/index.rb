@@ -1,55 +1,61 @@
 require 'victor'
 require 'net/http'
 require 'json'
+require 'uri'
 
 Handler = Proc.new do |req, res|
-	svg = Victor::SVG.new width: 250, height: 30, style: { background: '#ddd' }
-	if req.query.has_key?("username")
-		username = req.query["username"]
-		gist_count = 0;
-		page = 1;
-		# per_page = 100; # not working with page number, it's returing 30 per per page when used with page param
-		BASE_URL = "https://api.github.com"
+  if req.query.has_key?("username")
+    username = req.query["username"]
+    gist_count = fetch_gist_count(username)
+    message = "#{username}'s gist count is: #{gist_count}"
+    status = 200
+  else
+    message = "Username not found"
+    status = 404
+  end
 
-		begin
-			while true
-				params = "/users/#{username}/gists?page=#{page}"
-				url = URI.parse(URI.escape(("#{BASE_URL}#{params}")))
-				result = Net::HTTP.get_response(url)
-				if result.is_a?(Net::HTTPSuccess)
-					parsed = JSON.parse(result.body)
-					break if parsed.count == 0
-					gist_count += parsed.count
-					page = page + 1
-				else
-					gist_count = "#{result}"
-					break
-				end
-			end
-		rescue Exception => e
-			puts "#{"something bad happened"} #{e}"
-		end
+  # Calculate width dynamically based on message length
+  width = calculate_width(message)
 
-		svg.build do
-			g font_size: 16, font_family: 'arial', fill: 'black' do
-				text "#{username}'s gist count is: #{gist_count}", x: 20, y: 20
-			end
-		end
+  svg = Victor::SVG.new width: width, height: 30, style: { background: '#30363C' }
+  svg.build do
+    g font_size: 12, font_family: 'arial', fill: 'white' do
+      text message, x: 10, y: 20
+    end
+  end
 
-		res.status = 200
-		res['Cache-Control'] = "public, max-age=#{86400}"
-		res['Content-Type'] = 'image/svg+xml'
-		res.body = svg.render
-	else
+  res.status = status
+  res['Cache-Control'] = "public, max-age=#{86_400}"
+  res['Content-Type'] = 'image/svg+xml'
+  res.body = svg.render
+end
 
-		svg.build do
-			g font_size: 16, font_family: 'arial', fill: 'black' do
-				text "username name not found", x: 20, y: 20
-			end
-		end
+def fetch_gist_count(username)
+  gist_count = 0
+  page = 1
+  base_url = "https://api.github.com"
 
-		res.status = 404
-		res['Content-Type'] = 'image/svg+xml'
-		res.body = svg.render
-	end
+  loop do
+    params = "/users/#{URI.encode_www_form_component(username)}/gists?page=#{page}"
+    url = URI("#{base_url}#{params}")
+    result = Net::HTTP.get_response(url)
+    break unless result.is_a?(Net::HTTPSuccess)
+
+    parsed = JSON.parse(result.body)
+    break if parsed.empty?
+
+    gist_count += parsed.count
+    page += 1
+  end
+
+  gist_count
+rescue => e
+  puts "Error fetching gist count: #{e}"
+  "Error"
+end
+
+def calculate_width(text)
+  base_width = 250 # Minimum width
+  additional_width = text.length * 8 # Approx. width per character
+  [base_width, additional_width].max
 end
