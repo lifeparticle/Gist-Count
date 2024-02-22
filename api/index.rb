@@ -55,5 +55,5 @@ rescue => e
 end
 
 def calculate_width(text)
-  text.length * 4
+  text.length * 4 + 6
 end
