@@ -14,12 +14,14 @@ Handler = Proc.new do |req, res|
     status = 404
   end
 
+  theme = req.query["theme"] || "dark"
   width = calculate_width(message)
+  colors = get_colors(theme)
 
   svg = Victor::SVG.new viewBox: "0 0 #{width} 20", height: '20'
-  svg.rect x: 0, y: 0, width: width, height: 20, rx: 5, ry: 5, fill: '#30363C'
+  svg.rect x: 0, y: 0, width: width, height: 20, rx: 5, ry: 5, fill: colors[:background]
   svg.build do
-    g font_size: 10, font_family: 'arial', fill: 'white' do      
+    g font_size: 10, font_family: 'arial', fill: colors[:text] do
       text message, x: width / 2, y: 13.5, text_anchor: 'middle'
     end
   end
@@ -56,4 +58,12 @@ end
 
 def calculate_width(text)
   text.length * 4.4 + 10
+end
+
+def get_colors(theme)
+  if theme == "light"
+    { background: '#FFFFFF', text: '#000000' }
+  else
+    { background: '#30363C', text: '#FFFFFF' }
+  end
 end
