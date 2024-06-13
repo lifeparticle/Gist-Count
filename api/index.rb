@@ -21,7 +21,7 @@ Handler = Proc.new do |req, res|
   svg = Victor::SVG.new viewBox: "0 0 #{width} 20", height: '20'
   svg.rect x: 0, y: 0, width: width, height: 20, rx: 5, ry: 5, fill: colors[:background]
   svg.build do
-    g font_size: 10, font_family: 'arial', fill: colors[:text] do
+    g font_size: 10, font_family: 'arial', fill: colors[:text], text_shadow: colors[:shadow] do
       text message, x: width / 2, y: 13.5, text_anchor: 'middle'
     end
   end
@@ -62,8 +62,49 @@ end
 
 def get_colors(theme)
   if theme == "light"
-    { background: '#FFFFFF', text: '#000000' }
+    { background: 'url(#grad1)', text: '#000000', shadow: '0.5px 0.5px 1px #CCC' }
   else
-    { background: '#30363C', text: '#FFFFFF' }
+    { background: '#30363C', text: '#FFFFFF', shadow: '' }
   end
+end
+
+def add_gradient(svg)
+  svg.build do
+    defs do
+      linearGradient id: "grad1", x1: "0%", y1: "0%", x2: "0%", y2: "100%" do
+        stop offset: "0%", style: "stop-color:rgb(255,255,255);stop-opacity:1" 
+        stop offset: "100%", style: "stop-color:rgb(200,200,200);stop-opacity:1" 
+      end
+    end
+  end
+end
+
+Handler = Proc.new do |req, res|
+  if req.query.has_key?("username")
+    username = req.query["username"]
+    gist_count = fetch_gist_count(username)
+    message = "#{username}'s gist count is: #{gist_count}"
+    status = 200
+  else
+    message = "Username not found"
+    status = 404
+  end
+
+  theme = req.query["theme"] || "dark"
+  width = calculate_width(message)
+  colors = get_colors(theme)
+
+  svg = Victor::SVG.new viewBox: "0 0 #{width} 20", height: '20'
+  add_gradient(svg) if theme == "light"
+  svg.rect x: 0, y: 0, width: width, height: 20, rx: 5, ry: 5, fill: colors[:background]
+  svg.build do
+    g font_size: 10, font_family: 'arial', fill: colors[:text], text_shadow: colors[:shadow] do
+      text message, x: width / 2, y: 13.5, text_anchor: 'middle'
+    end
+  end
+
+  res.status = status
+  res['Cache-Control'] = "public, max-age=#{86_400}"
+  res['Content-Type'] = 'image/svg+xml'
+  res.body = svg.render
 end
