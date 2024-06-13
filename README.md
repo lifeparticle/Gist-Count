@@ -34,6 +34,10 @@ or using an image tag
 </a>
 ```
 
+Light mode:
+
+[![Github gists](https://gist-count.vercel.app/api?username=lifeparticle&theme=light)](https://gist.github.com/lifeparticle)
+
 ## Cache
 
 Default cache is 1 day (86400 seconds).
