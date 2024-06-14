@@ -18,12 +18,16 @@ Handler = Proc.new do |req, res|
   width = calculate_width(message)
   colors = get_colors(theme)
 
-  svg = Victor::SVG.new viewBox: "0 0 #{width} 20", height: '20'
+  svg = Victor::SVG.new viewBox: "0 0 #{width + 40} 20", height: '20'
   add_gradient(svg) if theme == "light"
-  svg.rect x: 0, y: 0, width: width, height: 20, rx: 5, ry: 5, fill: colors[:background]
+  svg.rect x: 0, y: 0, width: 40, height: 20, fill: '#595959'
+  svg.rect x: 40, y: 0, width: width, height: 20, fill: colors[:background]
   svg.build do
+    g font_size: 10, font_family: 'Verdana, Arial, sans-serif', fill: colors[:left_text] do
+      text 'Gist count', x: 20, y: 13.5, text_anchor: 'middle'
+    end
     g font_size: 10, font_family: 'Verdana, Arial, sans-serif', fill: colors[:text], text_shadow: colors[:shadow] do
-      text message, x: width / 2, y: 13.5, text_anchor: 'middle'
+      text gist_count.to_s, x: 40 + width / 2, y: 13.5, text_anchor: 'middle'
     end
   end
 
@@ -63,9 +67,9 @@ end
 
 def get_colors(theme)
   if theme == "light"
-    { background: 'url(#grad1)', text: '#000000', shadow: '0.5px 0.5px 1px #CCC' }
+    { background: 'url(#grad1)', text: '#9B9B9B', shadow: '0.5px 0.5px 1px #CCC', left_text: '#FFFFFF' }
   else
-    { background: '#30363C', text: '#FFFFFF', shadow: '' }
+    { background: '#30363C', text: '#9B9B9B', shadow: '', left_text: '#FFFFFF' }
   end
 end
 
