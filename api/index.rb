@@ -7,7 +7,7 @@ Handler = Proc.new do |req, res|
   if req.query.has_key?("username")
     username = req.query["username"]
     gist_count = fetch_gist_count(username)
-    message = "Gist count: #{gist_count}"
+    message = gist_count.to_s
     status = 200
   else
     message = "Username not found"
@@ -15,19 +15,20 @@ Handler = Proc.new do |req, res|
   end
 
   theme = req.query["theme"] || "dark"
-  width = calculate_width(message)
+  left_width = 75
+  right_width = calculate_width(message)
   colors = get_colors(theme)
 
-  svg = Victor::SVG.new viewBox: "0 0 #{width + 40} 20", height: '20'
+  svg = Victor::SVG.new viewBox: "0 0 #{left_width + right_width} 20", height: '20'
   add_gradient(svg) if theme == "light"
-  svg.rect x: 0, y: 0, width: 40, height: 20, fill: '#595959'
-  svg.rect x: 40, y: 0, width: width, height: 20, fill: colors[:background]
+  svg.rect x: 0, y: 0, width: left_width, height: 20, fill: '#595959'
+  svg.rect x: left_width, y: 0, width: right_width, height: 20, fill: colors[:background]
   svg.build do
     g font_size: 10, font_family: 'Verdana, Arial, sans-serif', fill: colors[:left_text] do
-      text 'Gist count', x: 20, y: 13.5, text_anchor: 'middle'
+      text 'Gist count', x: left_width / 2, y: 13.5, text_anchor: 'middle'
     end
     g font_size: 10, font_family: 'Verdana, Arial, sans-serif', fill: colors[:text], text_shadow: colors[:shadow] do
-      text gist_count.to_s, x: 40 + width / 2, y: 13.5, text_anchor: 'middle'
+      text message, x: left_width + right_width / 2, y: 13.5, text_anchor: 'middle'
     end
   end
 
@@ -62,7 +63,7 @@ rescue => e
 end
 
 def calculate_width(text)
-  text.length * 4.4 + 10
+  text.length * 7 + 20
 end
 
 def get_colors(theme)
