@@ -15,7 +15,7 @@ Handler = Proc.new do |req, res|
   end
 
   theme = req.query["theme"] || "dark"
-  left_width = 90
+  left_width = 75
   right_width = calculate_width(message)
   total_width = left_width + right_width
   colors = get_colors(theme)
@@ -23,8 +23,8 @@ Handler = Proc.new do |req, res|
   svg = Victor::SVG.new viewBox: "0 0 #{total_width} 20", height: '20'
   add_gradient(svg) if theme == "light"
   svg.rect x: 0, y: 0, width: total_width, height: 20, rx: 5, ry: 5, fill: 'none'
-  svg.rect x: 0, y: 0, width: left_width, height: 20, fill: '#595959'
-  svg.rect x: left_width, y: 0, width: right_width, height: 20, fill: colors[:background]
+  svg.rect x: 0, y: 0, width: left_width, height: 20, rx: 5, ry: 5, fill: '#595959'
+  svg.rect x: left_width - 5, y: 0, width: right_width + 5, height: 20, rx: 5, ry: 5, fill: colors[:background]
   svg.build do
     g font_size: 10, font_family: 'Verdana, Arial, sans-serif', fill: colors[:left_text] do
       text 'Gist count', x: left_width / 2, y: 13.5, text_anchor: 'middle'
