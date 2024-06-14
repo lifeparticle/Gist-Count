@@ -27,7 +27,7 @@ Handler = Proc.new do |req, res|
   svg.rect x: left_width, y: 0, width: right_width, height: 20, fill: colors[:background]
   svg.build do
     g font_size: 10, font_family: 'Verdana, Arial, sans-serif', fill: colors[:left_text] do
-      text 'Gist count', x: left_width / 2, y: 13.5, text_anchor: 'middle'
+      text 'Gist Count', x: left_width / 2, y: 13.5, text_anchor: 'middle'
     end
     g font_size: 10, font_family: 'Verdana, Arial, sans-serif', fill: colors[:text], text_shadow: colors[:shadow] do
       text message, x: left_width + right_width / 2, y: 13.5, text_anchor: 'middle'
