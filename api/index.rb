@@ -70,7 +70,7 @@ def get_colors(theme)
   if theme == "light"
     { background: 'url(#grad1)', text: '#9B9B9B', shadow: '0.5px 0.5px 1px #CCC', left_text: '#FFFFFF' }
   else
-    { background: '#30363C', text: '#9B9B9B', shadow: '', left_text: '#FFFFFF' }
+    { background: '#30363C', text: '#FFFFFF', shadow: '', left_text: '#FFFFFF' }
   end
 end
 
